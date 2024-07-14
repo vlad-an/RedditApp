@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPosts } from './features/posts/postsSlice';
+import PostList from './components/PostList';  // You will need to create this component
 
 function App() {
+  const dispatch = useDispatch();
+  const posts = useSelector(state => state.posts.posts);
+  const status = useSelector(state => state.posts.status);
+  const error = useSelector(state => state.posts.error);
+
+  useEffect(() => {
+    dispatch(fetchPosts('popular'));  // Fetch popular posts on component mount
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Reddit Posts</h1>
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'failed' && <p>Error: {error}</p>}
+      {status === 'succeeded' && <PostList posts={posts} />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchSubredditPosts, searchPosts } from '../api/redditAPI';   // Assume this is your API fetching utility
+import { fetchSubredditPosts, searchPosts } from '../../api/redditApi';   // Assume this is your API fetching utility
 
 
 // Define the initial state
